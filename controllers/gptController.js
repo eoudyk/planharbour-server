@@ -1,10 +1,5 @@
 const axios = require("axios");
-// const fs = require("fs");
-const path = require("path");
 const knex = require("../db");
-// const knexConfig = require("../knexfile");
-// const environment = process.env.NODE_ENV || "development";
-// const knex = require("knex")(knexConfig[environment]);
 
 exports.sendMessageToGPT = async (req, res) => {
   const userMessage = req.body.prompt;
