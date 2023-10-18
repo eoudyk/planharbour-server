@@ -1,8 +1,7 @@
 const axios = require("axios");
-const { v4: uuidv4 } = require("uuid");
 // const fs = require("fs");
 const path = require("path");
-// const knex = require("../knexfile");
+const knex = require("../db");
 // const knexConfig = require("../knexfile");
 // const environment = process.env.NODE_ENV || "development";
 // const knex = require("knex")(knexConfig[environment]);
@@ -56,7 +55,7 @@ exports.saveLessonToDB = async (req, res) => {
   } = req.body;
 
   try {
-    await knex("lesson_entries").insert({
+    await knex("lessons").insert({
       grade,
       subject,
       subtopic,
@@ -81,31 +80,3 @@ exports.saveLessonToDB = async (req, res) => {
       .json({ success: false, message: "Error saving lesson to database." });
   }
 };
-
-//temporary save file:
-// exports.saveLessonToFile = (req, res) => {
-//   const { content } = req.body;
-
-//   if (!content) {
-//     return res.status(400).json({ error: "Content is required." });
-//   }
-
-//   const lessonsFilePath = path.join(__dirname, "lessons.json");
-
-//   let lessons = [];
-
-//   if (fs.existsSync(lessonsFilePath)) {
-//     lessons = JSON.parse(fs.readFileSync(lessonsFilePath, "utf-8"));
-//   }
-
-//   const newLesson = {
-//     id: uuidv4(),
-//     content,
-//   };
-
-//   lessons.push(newLesson);
-
-//   fs.writeFileSync(lessonsFilePath, JSON.stringify(lessons, null, 2));
-
-//   res.json(newLesson);
-// };
