@@ -1,7 +1,11 @@
 const axios = require("axios");
 const { v4: uuidv4 } = require("uuid");
-const fs = require("fs");
+// const fs = require("fs");
 const path = require("path");
+// const knex = require("../knexfile");
+// const knexConfig = require("../knexfile");
+// const environment = process.env.NODE_ENV || "development";
+// const knex = require("knex")(knexConfig[environment]);
 
 exports.sendMessageToGPT = async (req, res) => {
   const userMessage = req.body.prompt;
@@ -36,9 +40,51 @@ exports.sendMessageToGPT = async (req, res) => {
   }
 };
 
+exports.saveLessonToDB = async (req, res) => {
+  const {
+    grade,
+    subject,
+    subtopic,
+    lessonLength,
+    studentCount,
+    techAvailable,
+    devicesCount,
+    soundAvailable,
+    materialsAvailable,
+    teacherInvolvement,
+    gptResponse,
+  } = req.body;
+
+  try {
+    await knex("lesson_entries").insert({
+      grade,
+      subject,
+      subtopic,
+      lessonLength,
+      studentCount,
+      techAvailable,
+      devicesCount,
+      soundAvailable,
+      materialsAvailable,
+      teacherInvolvement,
+      gptResponse,
+    });
+
+    res.json({
+      success: true,
+      message: "Lesson saved to database successfully!",
+    });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ success: false, message: "Error saving lesson to database." });
+  }
+};
+
 //temporary save file:
 // exports.saveLessonToFile = (req, res) => {
-//   const { title, content } = req.body;
+//   const { content } = req.body;
 
 //   if (!content) {
 //     return res.status(400).json({ error: "Content is required." });
