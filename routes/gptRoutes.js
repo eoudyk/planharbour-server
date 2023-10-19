@@ -4,6 +4,7 @@ const gptController = require("../controllers/gptController");
 
 router.post("/sendToGPT", gptController.sendMessageToGPT);
 router.post("/saveLessonToDB", gptController.saveLessonToDB);
+router.get("/getLessons", gptController.getLessons);
 
 // if temp want to save:
 // router.post("/saveLessonToFile", gptController.saveLessonToFile);

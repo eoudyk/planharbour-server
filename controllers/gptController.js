@@ -75,3 +75,13 @@ exports.saveLessonToDB = async (req, res) => {
       .json({ success: false, message: "Error saving lesson to database." });
   }
 };
+
+exports.getLessons = async (req, res) => {
+  try {
+    const lessons = await knex("lessons").select("*");
+    res.json({ success: true, lessons });
+  } catch (error) {
+    console.error("Error fetching lessons from database:", error);
+    res.status(500).json({ success: false, error: "Failed to fetch lessons." });
+  }
+};
