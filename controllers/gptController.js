@@ -85,3 +85,15 @@ exports.getLessons = async (req, res) => {
     res.status(500).json({ success: false, error: "Failed to fetch lessons." });
   }
 };
+
+exports.deleteLesson = async (req, res) => {
+  const { lessonId } = req.params;
+
+  try {
+    await knex("lessons").where("id", lessonId).del();
+    res.json({ success: true, message: "Lesson deleted successfully!" });
+  } catch (error) {
+    console.error("Error deleting lesson from database:", error);
+    res.status(500).json({ success: false, error: "Failed to delete lesson." });
+  }
+};
