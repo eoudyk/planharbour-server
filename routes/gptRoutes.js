@@ -7,7 +7,4 @@ router.post("/saveLessonToDB", gptController.saveLessonToDB);
 router.get("/getLessons", gptController.getLessons);
 router.delete("/deleteLesson/:lessonId", gptController.deleteLesson);
 
-// if temp want to save:
-// router.post("/saveLessonToFile", gptController.saveLessonToFile);
-
 module.exports = router;
